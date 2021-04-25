@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.harnet.radiobutton.R
-import com.harnet.radiobutton.model.Report
+import com.harnet.radiobutton.model.ReportType
 import xdroid.enumformat.EnumFormat
 
 
@@ -16,19 +16,19 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioHolder>() {
     private var lastChecked: RadioButton? = null
     private var lastCheckedPos = 0
 
-    private val diffUtil = object : DiffUtil.ItemCallback<Report>(){
-        override fun areItemsTheSame(oldItem: Report, newItem: Report): Boolean {
+    private val diffUtil = object : DiffUtil.ItemCallback<ReportType>(){
+        override fun areItemsTheSame(oldItem: ReportType, newItem: ReportType): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Report, newItem: Report): Boolean {
-            return oldItem.reportType == newItem.reportType
+        override fun areContentsTheSame(oldItem: ReportType, newItem: ReportType): Boolean {
+            return oldItem.type == newItem.type
         }
     }
 
     private val recyclerViewDiffer = AsyncListDiffer(this, diffUtil)
 
-    var reports: List<Report>
+    var reportTypes: List<ReportType>
         get() = recyclerViewDiffer.currentList
         set(value) = recyclerViewDiffer.submitList(value)
 
@@ -46,13 +46,13 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioHolder>() {
         val reportName = holder.itemView.findViewById<RadioButton>(R.id.reportNameBtn)
 
         reportName.apply {
-            this.text = EnumFormat.getInstance().format(reports[position].reportType)
-            this.isChecked = reports[position].isSelected
+            this.text = EnumFormat.getInstance().format(reportTypes[position].type)
+            this.isChecked = reportTypes[position].isSelected
             this.tag = Integer.valueOf(position)
         }
 
         //for default check in first item
-        if(position == 0 && reports[0].isSelected && reportName.isChecked)
+        if(position == 0 && reportTypes[0].isSelected && reportName.isChecked)
         {
             lastChecked = reportName
             lastCheckedPos = 0
@@ -67,7 +67,7 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioHolder>() {
                 if(lastChecked != null)
                 {
                     lastChecked?.isChecked = false
-                    reports[lastCheckedPos].isSelected = false
+                    reportTypes[lastCheckedPos].isSelected = false
                 }
 
                 lastChecked = cb
@@ -76,7 +76,7 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioHolder>() {
             else
                 lastChecked = null
 
-            reports[clickedPos].isSelected = cb.isChecked
+            reportTypes[clickedPos].isSelected = cb.isChecked
         }
 
     }
@@ -84,6 +84,6 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioHolder>() {
     class RadioHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
     override fun getItemCount(): Int {
-        return reports.size
+        return reportTypes.size
     }
 }
