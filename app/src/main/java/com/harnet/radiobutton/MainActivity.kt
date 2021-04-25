@@ -14,7 +14,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val reports = arrayListOf(Report("One"), Report("Two"), Report("Three"), Report("Four"))
+        val reports = arrayListOf(Report(Report.ReportType.WRONG_POI),
+                                  Report(Report.ReportType.NEW_CAMERA))
 
         val recyclerView = findViewById<RecyclerView>(R.id.radioGroup)
         recyclerView.layoutManager = LinearLayoutManager(this)

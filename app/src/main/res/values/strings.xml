@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Radio button</string>
+    <string name="wrong_poi">Wrong POI</string>
+    <string name="new_speed_camera">New Speed Camera</string>
 </resources>

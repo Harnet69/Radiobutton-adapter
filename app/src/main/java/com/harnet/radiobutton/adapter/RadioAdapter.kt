@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.harnet.radiobutton.R
 import com.harnet.radiobutton.model.Report
+import xdroid.enumformat.EnumFormat
 
 
 class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioHolder>() {
@@ -21,7 +22,7 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioHolder>() {
         }
 
         override fun areContentsTheSame(oldItem: Report, newItem: Report): Boolean {
-            return oldItem == newItem
+            return oldItem.reportType == newItem.reportType
         }
     }
 
@@ -43,14 +44,12 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioHolder>() {
     override fun onBindViewHolder(holder: RadioHolder, position: Int) {
         //TODO implement dataBinding
         val reportName = holder.itemView.findViewById<RadioButton>(R.id.reportNameBtn)
-//        val report = reports[position]
-//        holder.itemView.apply {
-//            reportName.text = report.name
-//        }
 
-        reportName.setText(reports[position].name)
-        reportName.isChecked = reports[position].isSelected
-        reportName.tag = Integer.valueOf(position)
+        reportName.apply {
+            this.text = EnumFormat.getInstance().format(reports[position].reportType)
+            this.isChecked = reports[position].isSelected
+            this.tag = Integer.valueOf(position)
+        }
 
         //for default check in first item
         if(position == 0 && reports[0].isSelected && reportName.isChecked)
@@ -77,7 +76,7 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioHolder>() {
             else
                 lastChecked = null
 
-            reports.get(clickedPos).isSelected = cb.isChecked
+            reports[clickedPos].isSelected = cb.isChecked
         }
 
     }
