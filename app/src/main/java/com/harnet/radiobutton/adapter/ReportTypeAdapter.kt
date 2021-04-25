@@ -12,7 +12,7 @@ import com.harnet.radiobutton.model.ReportType
 import xdroid.enumformat.EnumFormat
 
 
-class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioHolder>() {
+class ReportTypeAdapter : RecyclerView.Adapter<ReportTypeAdapter.RadioHolder>() {
     private var lastChecked: RadioButton? = null
     private var lastCheckedPos = 0
 
